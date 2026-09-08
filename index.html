@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Advanced Security — Spring 2027</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5b6773;
+      --line: #d8e0e7;
+      --blue: #1f5f99;
+      --blue-soft: #eef5fb;
+      --paper: #ffffff;
+      --bg: #f7f9fb;
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.58;
+    }
+
+    a { color: var(--blue); }
+
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+
+    header {
+      border-bottom: 3px solid var(--blue);
+      padding-bottom: 22px;
+      margin-bottom: 30px;
+    }
+
+    .eyebrow {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.08;
+      margin: 0 0 8px;
+      font-weight: 750;
+      letter-spacing: -0.035em;
+    }
+
+    .subtitle {
+      margin: 0;
+      font-size: 1.06rem;
+      color: var(--muted);
+    }
+
+    h2 {
+      margin: 36px 0 12px;
+      font-size: 1.45rem;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+
+    h3 {
+      margin: 24px 0 7px;
+      font-size: 1.08rem;
+    }
+
+    p { margin: 9px 0 13px; }
+
+    ul, ol { padding-left: 1.35rem; }
+
+    li { margin: 5px 0; }
+
+    .details {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      margin-top: 22px;
+    }
+
+    .detail {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .detail:nth-child(odd) {
+      border-right: 1px solid var(--line);
+    }
+
+    .detail:nth-last-child(-n+2) {
+      border-bottom: 0;
+    }
+
+    .detail b {
+      display: block;
+      font-size: 0.76rem;
+      letter-spacing: .055em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2px;
+    }
+
+    .callout {
+      background: var(--blue-soft);
+      border-left: 4px solid var(--blue);
+      padding: 15px 18px;
+      margin: 18px 0;
+    }
+
+    .grading {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--line);
+      background: var(--paper);
+      margin: 15px 0 22px;
+    }
+
+    .grade {
+      padding: 17px 12px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+    }
+
+    .grade:last-child { border-right: 0; }
+
+    .grade strong {
+      display: block;
+      color: var(--blue);
+      font-size: 1.5rem;
+      line-height: 1.1;
+    }
+
+    .grade span {
+      display: block;
+      margin-top: 4px;
+      font-size: .88rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      margin: 14px 0 24px;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: .035em;
+      text-transform: uppercase;
+      background: #f2f5f8;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .small { color: var(--muted); font-size: .93rem; }
+
+    footer {
+      margin-top: 52px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .86rem;
+    }
+
+    @media (max-width: 720px) {
+      .details { grid-template-columns: 1fr; }
+      .detail:nth-child(odd) { border-right: 0; }
+      .detail:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .detail:last-child { border-bottom: 0; }
+
+      .grading { grid-template-columns: 1fr 1fr; }
+      .grade:nth-child(2) { border-right: 0; }
+      .grade:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+
+      table { font-size: .92rem; }
+      th, td { padding: 9px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <header>
+      <div class="eyebrow">COMS E6998</div>
+      <h1>Advanced Security</h1>
+      <p class="subtitle">Formal reasoning, program analysis, and security for modern machine-learning systems · Spring 2027</p>
+
+      <section class="details" aria-label="Course details">
+        <div class="detail"><b>Instructor</b>Suman Jana</div>
+        <div class="detail"><b>Office</b>Mudd 412</div>
+        <div class="detail"><b>Office hours</b>By appointment</div>
+        <div class="detail"><b>Classroom</b>TBA</div>
+        <div class="detail"><b>Class time</b>TBA</div>
+        <div class="detail"><b>Format</b>Lecture + student-led paper discussion</div>
+      </section>
+    </header>
+
+    <section>
+      <h2>Description</h2>
+      <p>
+        This course explores advanced topics in computer security, with an emphasis on the interaction
+        between security, program analysis, formal reasoning, and modern machine-learning systems.
+        Rather than treating papers as isolated results, we will use them to study recurring questions:
+        What does an attacker control? What information does a system depend on? What behavior can we
+        prove? What can we infer from observations? What breaks under composition? And how should
+        defenses be designed?
+      </p>
+      <p>
+        The course is discussion-oriented. Students are expected to read the assigned papers carefully
+        and come to class prepared to explain, criticize, and reason about them. There is no assigned
+        textbook.
+      </p>
+    </section>
+
+    <section>
+      <h2>Prerequisite</h2>
+      <p>
+        Security I or equivalent background. Familiarity with machine learning or program analysis is
+        useful but not required. Please contact the instructor if you are unsure about preparation.
+      </p>
+    </section>
+
+    <section>
+      <h2>Class format</h2>
+      <p>A typical 110-minute class will have four parts:</p>
+      <ol>
+        <li><strong>Instructor introduction (about 10 minutes):</strong> framing the topic, connecting the readings, and highlighting the main questions for discussion.</li>
+        <li><strong>Two student presentations (about 60 minutes total):</strong> two focused 30-minute presentations, normally covering one assigned reading each.</li>
+        <li><strong>Break (about 10 minutes).</strong></li>
+        <li><strong>Q&amp;A and discussion (about 30 minutes):</strong> questions for the presenters, comparison across the readings, criticism, and open research problems.</li>
+      </ol>
+      <p><strong>Exception:</strong> the first class will be instructor-led and will not have student presentations.</p>
+
+      <div class="callout">
+        <strong>The goal is not paper summarization.</strong>
+        Students should understand a paper well enough to identify what is essential, what assumptions
+        it relies on, what is unconvincing, and what research question should come next.
+      </div>
+    </section>
+
+    <section>
+      <h2>Student presentations</h2>
+      <p>Each student presentation is approximately <strong>30 minutes</strong>. Presentations should be concise and analytical. A useful structure is:</p>
+
+      <table>
+        <thead>
+          <tr><th>Part</th><th>Approx. time</th><th>Goal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Problem / motivation</td><td>3–4 min</td><td>What problem is the paper trying to solve, and why does it matter?</td></tr>
+          <tr><td>Core technical idea</td><td>12–15 min</td><td>Explain the mechanism carefully, including the main technical details.</td></tr>
+          <tr><td>Evaluation / evidence</td><td>5–6 min</td><td>What results support the claims, and which result matters most?</td></tr>
+          <tr><td>Critique</td><td>3–4 min</td><td>Identify a substantive limitation, weak assumption, or missing experiment.</td></tr>
+          <tr><td>Research question</td><td>2–3 min</td><td>What should someone do next?</td></tr>
+        </tbody>
+      </table>
+
+      <p class="small">
+        As a guideline, each 30-minute presentation should use roughly 25–30 substantive slides.
+        Presenters are expected to go into technical depth rather than skim the paper, and must be able
+        to answer questions about any claim on their slides.
+      </p>
+    </section>
+
+    <section>
+      <h2>Reading and participation</h2>
+      <p>
+        There are <strong>no weekly paper summaries</strong>. Everyone is expected to read the required
+        paper before class and participate in discussion. Students may occasionally be called on to
+        explain a paper's key assumption, strongest result, limitation, or an aspect they found unclear.
+      </p>
+      <p>
+        For selected classes, students may be asked to submit a single sentence before class—for example,
+        the weakest assumption in the paper or one experiment they would add. These responses are
+        intended as preparation for discussion rather than as miniature essays.
+      </p>
+    </section>
+
+    <section>
+      <h2>Quizzes</h2>
+      <p>
+        There will be <strong>two short in-class quizzes</strong> during the semester. Their purpose is
+        simply to keep everyone current with the core ideas from lectures and readings.
+      </p>
+      <ul>
+        <li>Each quiz will be short and designed to be straightforward to grade.</li>
+        <li>Questions will focus on important concepts, assumptions, threat models, and basic technical ideas—not obscure details.</li>
+        <li>Questions will primarily be multiple choice, true/false with a brief justification, or one-phrase/one-sentence answers.</li>
+        <li>No lengthy derivations.</li>
+        <li>Quizzes are individual and completed without AI tools or other electronic assistance.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Use of AI tools</h2>
+      <p>
+        Students may use LLMs and other AI tools for reading assistance, brainstorming, presentation
+        preparation, coding, and project work unless explicitly stated otherwise. The course will not
+        attempt to distinguish AI-assisted prose from unaided prose.
+      </p>
+      <p>
+        However, students are responsible for everything they submit or present. In presentations and
+        discussions, you must be able to explain and defend your claims, technical arguments, and
+        proposed ideas. Material that a student cannot explain should be treated as material the student
+        does not understand.
+      </p>
+      <div class="callout">
+        <strong>We do not grade students on their ability to produce paper summaries.</strong>
+        We care about technical understanding, judgment, criticism, and the ability to reason about
+        security problems interactively.
+      </div>
+    </section>
+
+    <section>
+      <h2>Project</h2>
+      <p>
+        The project should investigate a focused research question related to the course. A project may
+        reproduce, break, extend, or reinterpret an idea from a paper; build a small system; perform a
+        careful empirical study; or develop a formal or conceptual result.
+      </p>
+      <p>
+        The project is intentionally lightweight in structure. There are three milestones:
+      </p>
+      <ol>
+        <li><strong>One-page proposal:</strong> problem, motivation, and intended approach.</li>
+        <li><strong>Short midpoint presentation:</strong> what you tried, what happened, and what remains.</li>
+        <li><strong>Final report and presentation/demo:</strong> a concise account of the question, approach, evidence, and conclusions.</li>
+      </ol>
+      <p>
+        Negative results are acceptable. Projects are evaluated primarily on the quality of the question,
+        technical understanding, methodology, and what was learned—not on whether a new system beats a
+        baseline.
+      </p>
+    </section>
+
+    <section>
+      <h2>Grading</h2>
+
+      <div class="grading" aria-label="Grade breakdown">
+        <div class="grade"><strong>40%</strong><span>Project</span></div>
+        <div class="grade"><strong>30%</strong><span>Presentation</span></div>
+        <div class="grade"><strong>20%</strong><span>Two quizzes</span></div>
+        <div class="grade"><strong>10%</strong><span>Participation</span></div>
+      </div>
+
+      <p class="small">
+        Each quiz is worth 10% of the final grade. Presentation grades emphasize technical understanding,
+        judgment, criticism, and the ability to answer questions rather than slide polish.
+      </p>
+    </section>
+<section>
+      <h2>Schedule</h2>
+      <p class="small">The detailed schedule and readings will be posted here before the semester.</p>
+      <table>
+        <thead>
+          <tr><th>Week</th><th>Topic</th><th>Reading / notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jan 19</td>
+            <td><strong>Course introduction</strong></td>
+            <td>Instructor-led overview; no student presentations.</td>
+          </tr>
+          <tr>
+            <td>Jan 26</td>
+            <td><strong>Automated Vulnerability Discovery I</strong></td>
+            <td>
+              Anthropic, <a href="https://www.anthropic.com/research/mythos-preview"><em>Assessing Claude Mythos Preview's Cybersecurity Capabilities</em></a> (2026);
+              Abramovich et al., <a href="https://proceedings.mlr.press/v267/abramovich25a.html"><em>EnIGMA: Interactive Tools Substantially Assist LM Agents in Finding Security Vulnerabilities</em></a> (ICML 2025).
+            </td>
+          </tr>
+          <tr>
+            <td>Feb 2</td>
+            <td><strong>Automated Vulnerability Discovery II</strong></td>
+            <td>
+              <a href="https://arxiv.org/abs/2512.07533"><em>VulnLLM-R: Specialized Reasoning LLM with Agent Scaffold for Vulnerability Detection</em></a>;
+              Anthropic, <a href="https://www.anthropic.com/research/discovering-cryptographic-weaknesses"><em>Discovering Cryptographic Weaknesses with Claude</em></a>;
+              Fluri et al., <a href="https://arxiv.org/pdf/2607.18538"><em>CryptanalysisBench: Can LLMs do Cryptanalysis?</em></a> (2026).
+            </td>
+          </tr>
+          <tr><td>Feb 9</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Feb 16</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Feb 23</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Mar 2</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Mar 9</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Mar 16</td><td><strong>No class — Spring Recess</strong></td><td></td></tr>
+          <tr><td>Mar 23</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Mar 30</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Apr 6</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Apr 13</td><td>TBA</td><td>Topic and readings to be selected.</td></tr>
+          <tr><td>Apr 20</td><td><strong>Project presentations</strong></td><td>Final project presentations.</td></tr>
+          <tr><td>Apr 27</td><td><strong>Project presentations</strong></td><td>Final project presentations.</td></tr>
+</tbody>
+      </table>
+    </section>
+
+    <footer>
+      Advanced Security · Columbia University · Draft course page for Spring 2027
+    </footer>
+  </main>
+</body>
+</html>
