@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Advanced Security Topics — Project Ideas</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5b6773;
+      --line: #d8e0e7;
+      --blue: #1f5f99;
+      --blue-soft: #eef5fb;
+      --paper: #ffffff;
+      --bg: #f7f9fb;
+      --max: 980px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.58;
+    }
+    .page {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+    header {
+      border-bottom: 3px solid var(--blue);
+      padding-bottom: 22px;
+      margin-bottom: 30px;
+    }
+    .eyebrow {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.08;
+      margin: 0 0 8px;
+      font-weight: 750;
+      letter-spacing: -0.035em;
+    }
+    .subtitle {
+      margin: 0;
+      font-size: 1.06rem;
+      color: var(--muted);
+    }
+    h2 {
+      margin: 34px 0 10px;
+      font-size: 1.45rem;
+      line-height: 1.25;
+      letter-spacing: -0.015em;
+    }
+    p { margin: 9px 0 13px; }
+    ul { padding-left: 1.35rem; }
+    li { margin: 6px 0; }
+    .theme {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px 22px;
+      margin: 18px 0;
+    }
+    .theme h2 { margin-top: 0; }
+    .question {
+      background: var(--blue-soft);
+      border-left: 4px solid var(--blue);
+      padding: 12px 15px;
+      margin: 12px 0 14px;
+    }
+    .small {
+      color: var(--muted);
+      font-size: .93rem;
+    }
+    footer {
+      margin-top: 44px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: .86rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <div class="eyebrow">Advanced Security Topics · Fall 2026</div>
+      <h1>Project Ideas</h1>
+      <p class="subtitle">Research themes for LLM-based security projects</p>
+    </header>
+
+    <p>
+      Projects should investigate a focused research question involving LLMs and security.
+      The themes below are intentionally broad: students may propose ambitious systems,
+      careful empirical studies, new evaluation methods, or smaller but technically sharp
+      projects within any of these directions.
+    </p>
+
+    <section class="theme">
+      <h2>1. Verifying LLM-Generated Security Fixes</h2>
+      <div class="question">
+        <strong>Core question:</strong> How can we determine whether an LLM-generated security patch is actually correct and secure?
+      </div>
+      <ul>
+        <li>Check whether a generated patch truly eliminates the vulnerability rather than merely passing existing tests.</li>
+        <li>Automatically generate adversarial regression tests for LLM-produced patches.</li>
+        <li>Use execution, static analysis, symbolic reasoning, or formal verification to validate patches.</li>
+        <li>Detect whether a patch introduces new vulnerabilities or breaks functionality elsewhere.</li>
+        <li>Compare generate-then-check pipelines with verifier-guided patch generation.</li>
+        <li>Characterize common failure modes of LLM-generated security fixes.</li>
+      </ul>
+    </section>
+
+    <section class="theme">
+      <h2>2. Optimizing LLM Vulnerability-Discovery Trajectories</h2>
+      <div class="question">
+        <strong>Core question:</strong> What is the right search strategy for an LLM acting as an autonomous vulnerability researcher?
+      </div>
+      <ul>
+        <li>Learn search policies from successful and failed vulnerability-discovery traces.</li>
+        <li>Decide which file, function, call path, or hypothesis the model should inspect next.</li>
+        <li>Study when an agent should deepen one hypothesis, branch to alternatives, or backtrack.</li>
+        <li>Optimize search under fixed token, time, or tool-call budgets.</li>
+        <li>Define useful intermediate notions of progress beyond a binary success/failure outcome.</li>
+        <li>Compare breadth-first, depth-first, uncertainty-guided, and learned search strategies.</li>
+      </ul>
+    </section>
+
+    <section class="theme">
+      <h2>3. LLM Security Reasoning and Tool Use</h2>
+      <div class="question">
+        <strong>Core question:</strong> When should an LLM rely on latent security reasoning, and when should it query an external tool or environment?
+      </div>
+      <p>
+        Security tasks often require a mixture of internal reasoning and external semantic feedback.
+        A security agent may choose among actions such as running code, debugging, fuzzing, invoking
+        a static analyzer, querying an SMT solver, running tests, inspecting dependencies, or searching documentation.
+      </p>
+      <ul>
+        <li>Learn policies that decide when a tool call is worth its cost.</li>
+        <li>Measure when latent reasoning is sufficient and when external verification is essential.</li>
+        <li>Study whether uncertainty or confidence can predict useful tool calls.</li>
+        <li>Compare tool-use policies across vulnerability discovery, patching, exploit development, malware analysis, reverse engineering, incident response, and secure code review.</li>
+        <li>Investigate whether different security tasks require different sequences of tools.</li>
+        <li>Study cases where tool feedback hurts by distracting or misleading the model.</li>
+        <li>Frame tool selection as value of information, adaptive computation, or experimental design.</li>
+      </ul>
+    </section>
+
+    <section class="theme">
+      <h2>4. Measuring Genuine LLM Security Reasoning</h2>
+      <div class="question">
+        <strong>Core question:</strong> How can we distinguish genuine security reasoning from memorization, benchmark contamination, pattern matching, or lucky search?
+      </div>
+      <ul>
+        <li>Build temporal holdout benchmarks using vulnerabilities disclosed after likely model training cutoffs.</li>
+        <li>Apply semantics-preserving code transformations and test whether model conclusions remain stable.</li>
+        <li>Separate vulnerability localization, root-cause reasoning, trigger construction, exploit generation, and repair.</li>
+        <li>Test how performance changes as progressively more hints, patches, crashes, or CVE information are revealed.</li>
+        <li>Develop evaluation methods for previously unseen vulnerabilities rather than recycled benchmark tasks.</li>
+        <li>Measure robustness of security reasoning across codebases, languages, and repository structure.</li>
+      </ul>
+    </section>
+
+    <p class="small">
+      These are starting points, not fixed assignments. Students are encouraged to propose their own
+      question within the broader goal of understanding and improving LLM-based security reasoning.
+    </p>
+
+    <footer>
+      Advanced Security Topics · Columbia University · Fall 2026
+    </footer>
+  </main>
+</body>
+</html>
